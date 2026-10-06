@@ -1,0 +1,20 @@
+<header class="topbar">
+  <a class="brand" routerLink="/inicio" aria-label="DAM2 Productos, ir al inicio">
+    <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+      <rect width="32" height="32" rx="9" fill="var(--c-pine)"/>
+      <path d="M9 11h9.5a4 4 0 0 1 2.8 1.2l2.5 2.6a2 2 0 0 1 0 2.8l-4.4 4.5a2 2 0 0 1-2.8 0L9 16.2z" fill="#f4a62a"/>
+      <circle cx="13" cy="14.5" r="1.6" fill="var(--c-pine)"/>
+    </svg>
+    <span>DAM2 Productos</span>
+  </a>
+
+  <nav class="actions">
+    @if (showBack) {
+      <a class="back" routerLink="/inicio">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+        <span>Volver al inicio</span>
+      </a>
+    }
+    <app-theme-toggle />
+  </nav>
+</header>

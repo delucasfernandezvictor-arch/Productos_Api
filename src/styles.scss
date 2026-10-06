@@ -1,0 +1,97 @@
+/* ============================================================
+   Sistema de diseño: tokens de color, tipografía y base
+   Paleta: pino (superficies oscuras), azafrán (acento),
+   tomate (descuentos) sobre un fondo verde-niebla.
+   ============================================================ */
+:root {
+  --f-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+
+  --c-bg: #e4ece7;
+  --c-surface: #ffffff;
+  --c-surface-2: #f1f6f3;
+  --c-ink: #0f2220;
+  --c-ink-soft: #4a615c;
+  --c-line: #c9d8d1;
+
+  --c-pine: #0e3b36;
+  --c-panel-line: transparent;
+  --c-on-pine: #eaf4ef;
+  --c-on-pine-soft: #9fc0b6;
+
+  --c-saffron: #f4a62a;
+  --c-tomato: #c8321a;
+  --c-low: #a8480b;
+
+  --c-action: #0e3b36;
+  --c-on-action: #eaf4ef;
+  --c-focus: #0e3b36;
+
+  /* Variables de Ionic enlazadas a nuestros tokens */
+  --ion-font-family: var(--f-body);
+  --ion-background-color: var(--c-bg);
+  --ion-text-color: var(--c-ink);
+}
+
+html.dark {
+  --c-bg: #08140f;
+  --c-surface: #102520;
+  --c-surface-2: #16302a;
+  --c-ink: #e6f1ec;
+  --c-ink-soft: #93b1a7;
+  --c-line: #234039;
+
+  --c-pine: #0d3a34;
+  --c-panel-line: #1f5249;
+
+  --c-action: #f4a62a;
+  --c-on-action: #1a1203;
+  --c-focus: #f4a62a;
+  --c-low: #f4a62a;
+  --c-tomato: #e0533a;
+}
+
+html, body {
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--f-body);
+}
+
+ion-content {
+  --background: var(--c-bg);
+  --color: var(--c-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--c-focus);
+  outline-offset: 3px;
+}
+
+/* Botones compartidos por todas las páginas */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.9rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  font: 600 0.95rem/1 var(--f-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn--primary { background: var(--c-action); color: var(--c-on-action); }
+.btn--ghost { border-color: currentColor; background: transparent; color: inherit; }
+.btn--ghost:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

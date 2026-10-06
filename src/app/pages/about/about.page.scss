@@ -1,0 +1,17 @@
+.wrap { max-width: 64rem; margin: 0 auto; padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2.5rem) 4rem; }
+h1 { font: 800 clamp(2.4rem, 6vw, 4.5rem)/.95 var(--f-display); letter-spacing: -.04em; margin: 0 0 2.5rem; }
+.grid { display: grid; gap: 2.5rem; align-items: start; margin-bottom: 2.5rem; }
+@media (min-width: 52rem) { .grid { grid-template-columns: 1.4fr 1fr; } }
+
+.story h2 { font-size: .95rem; font-weight: 600; color: var(--c-ink-soft); margin: 0 0 .5rem; }
+.lead { font: 700 1.9rem/1.15 var(--f-display); letter-spacing: -.02em; margin: 0 0 1.25rem; }
+.story p { font-size: 1.1rem; line-height: 1.7; max-width: 38rem; }
+
+.dev {
+  background: var(--c-pine); color: var(--c-on-pine); border: 1px solid var(--c-panel-line);
+  border-radius: 1.5rem; padding: 2rem;
+}
+.dev h2 { font-size: .9rem; font-weight: 600; color: var(--c-on-pine-soft); margin: 0 0 1.25rem; }
+.dev__name { font: 800 1.8rem/1.1 var(--f-display); letter-spacing: -.03em; margin: 0 0 .35rem; }
+.dev__role { color: var(--c-on-pine-soft); margin: 0 0 1.75rem; }
+.home { min-width: 14rem; }

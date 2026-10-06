@@ -1,0 +1,35 @@
+<ion-content [fullscreen]="true">
+  <app-topbar />
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero__copy">
+        <h1>Cada producto, con su stock valorado.</h1>
+        <p>
+          Aplicación Ionic + Angular Standalone para consumir una API REST de productos
+          con paginación y métricas avanzadas: precios con descuento, dimensiones y el valor
+          real de lo que tienes en almacén.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" routerLink="/productos">Ver productos</a>
+          <a class="btn btn--ghost" routerLink="/about">Conocer la empresa</a>
+        </div>
+      </div>
+
+      <figure class="ticket" aria-label="Ejemplo de cálculo del stock valorado">
+        <figcaption>Así se calcula el stock valorado</figcaption>
+        <p class="ticket__name">Pintalabios rojo</p>
+        <dl>
+          <div><dt>Precio</dt><dd>10,00 €</dd></div>
+          <div><dt>Descuento</dt><dd class="off">−20 %</dd></div>
+          <div><dt>Precio con descuento</dt><dd>8,00 €</dd></div>
+          <div><dt>Unidades en stock</dt><dd>× 50</dd></div>
+        </dl>
+        <div class="ticket__total">
+          <span>Stock valorado</span>
+          <strong>400,00 €</strong>
+        </div>
+      </figure>
+    </section>
+  </main>
+</ion-content>

@@ -1,0 +1,20 @@
+:host { display: block; position: sticky; top: 0; z-index: 10; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  max-width: 84rem; margin: 0 auto; padding: .85rem clamp(1rem, 3vw, 2.5rem);
+  background: color-mix(in srgb, var(--c-bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+}
+.brand {
+  display: inline-flex; align-items: center; gap: .65rem;
+  font: 800 1.15rem/1 var(--f-display); letter-spacing: -.02em;
+  color: var(--c-ink); text-decoration: none;
+}
+.actions { display: flex; align-items: center; gap: .6rem; }
+.back {
+  display: inline-flex; align-items: center; gap: .35rem; height: 2.5rem; padding: 0 1rem 0 .7rem;
+  border-radius: 999px; background: var(--c-action); color: var(--c-on-action);
+  font: 600 .85rem/1 var(--f-body); text-decoration: none;
+}
+@media (max-width: 30rem) { .brand span { display: none; } }

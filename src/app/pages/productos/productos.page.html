@@ -1,0 +1,139 @@
+<ion-content [fullscreen]="true">
+  <app-topbar [showBack]="true" />
+
+  <main class="wrap">
+    <div class="head">
+      <h1>Catálogo de productos</h1>
+      <p class="sub">
+        Página {{ currentPage }} de {{ totalPages }}. Mostrando {{ products.length }} de {{ totalProducts }} productos en catálogo.
+      </p>
+    </div>
+
+    @if (isLoading) {
+      <p class="loading" role="status">
+        <ion-spinner name="crescent"></ion-spinner> Cargando productos…
+      </p>
+      <div class="grid" aria-hidden="true">
+        @for (s of skeletons; track $index) {
+          <div class="card card--skeleton"></div>
+        }
+      </div>
+    }
+
+    @if (!isLoading && errorMessage) {
+      <div class="error" role="alert">
+        <h2>No se pudo cargar el catálogo</h2>
+        <p>{{ errorMessage }}</p>
+        <button type="button" class="btn btn--primary" (click)="loadProducts()">Reintentar</button>
+      </div>
+    }
+
+    @if (!isLoading && !errorMessage) {
+      <!-- ===== Dashboard: gráfico + métricas de la página ===== -->
+      <section class="dash" aria-label="Resumen de la página">
+        <div class="panel">
+          <h2>Stock valorado por producto</h2>
+          <p class="panel__sub">Unidades × precio con descuento, de mayor a menor</p>
+          <ol class="bars">
+            @for (row of rows; track row.id; let i = $index) {
+              <li class="bar-row" [style.--i]="i">
+                <span class="bar-name" [title]="row.title">{{ row.title }}</span>
+                <span class="bar-track"><span class="bar-fill" [style.--w]="row.pct + '%'"></span></span>
+                <span class="bar-val">{{ row.value | currency:'EUR':'symbol':'1.0-0':'es' }}</span>
+              </li>
+            }
+          </ol>
+        </div>
+
+        <dl class="stats">
+          <div class="stat">
+            <dt>Valor del stock en esta página</dt>
+            <dd class="stat__big">{{ pageValue | currency:'EUR':'symbol':'1.2-2':'es' }}</dd>
+          </div>
+          <div class="stat">
+            <dt>Unidades en stock</dt>
+            <dd>{{ pageUnits | number:'1.0-0':'es' }}</dd>
+          </div>
+          <div class="stat">
+            <dt>Descuento medio</dt>
+            <dd>{{ avgDiscount | number:'1.1-1':'es' }} %</dd>
+          </div>
+          <div class="stat">
+            <dt>Valoración media</dt>
+            <dd><span class="star" aria-hidden="true">★</span> {{ avgRating | number:'1.2-2':'es' }}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- ===== Tarjetas de producto ===== -->
+      <div class="grid">
+        @for (product of products; track product.id) {
+          <article class="card">
+            <div class="card__media">
+              <img [src]="product.thumbnail" [alt]="product.title" loading="lazy" />
+              @if (product.discountPercentage > 0) {
+                <span class="off">−{{ product.discountPercentage | number:'1.0-0' }} %</span>
+              }
+              <span class="id">#{{ product.id }}</span>
+            </div>
+
+            <div class="card__body">
+              <div class="meta">
+                <span class="cat">{{ prettyCategory(product.category) }}</span>
+                <span class="rating"><span class="star" aria-hidden="true">★</span> {{ product.rating | number:'1.1-2':'es' }}</span>
+              </div>
+              <h3>{{ product.title }}</h3>
+              <p class="brand">Marca: {{ product.brand || 'Genérica' }}</p>
+
+              <p class="dims">
+                <span>Ancho × alto</span>
+                <span>
+                  @if (product.dimensions) {
+                    {{ product.dimensions.width | number:'1.0-2':'es' }} × {{ product.dimensions.height | number:'1.0-2':'es' }} cm
+                  } @else { N/D }
+                </span>
+              </p>
+
+              <div class="price-row">
+                <div>
+                  <span class="price">{{ calculateDiscountedPrice(product) | currency:'EUR':'symbol':'1.2-2':'es' }}</span>
+                  @if (product.discountPercentage > 0) {
+                    <s class="old">{{ product.price | currency:'EUR':'symbol':'1.2-2':'es' }}</s>
+                  }
+                </div>
+                <span class="stock" [class.stock--low]="product.stock < 15">
+                  Stock: <strong>{{ product.stock }}</strong> uds
+                </span>
+              </div>
+            </div>
+
+            <div class="value">
+              <span class="value__label">Stock valorado</span>
+              <strong class="value__num">{{ calculateStockValue(product) | currency:'EUR':'symbol':'1.2-2':'es' }}</strong>
+              <span class="value__calc">{{ product.stock }} uds × {{ calculateDiscountedPrice(product) | currency:'EUR':'symbol':'1.2-2':'es' }}</span>
+              <span class="meter" role="img"
+                    [attr.aria-label]="'Equivale al ' + (pct(product) | number:'1.0-0') + ' % del producto de mayor valor de la página'">
+                <span [style.width.%]="pct(product)"></span>
+              </span>
+            </div>
+          </article>
+        }
+      </div>
+
+      <!-- ===== Paginación ===== -->
+      <nav class="pager" aria-label="Paginación del catálogo">
+        <button type="button" class="pager__step" (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+        @for (p of pageItems; track $index) {
+          @if (p === null) {
+            <span class="pager__gap" aria-hidden="true">…</span>
+          } @else {
+            <button type="button" class="pager__num" [class.is-current]="p === currentPage"
+                    [attr.aria-current]="p === currentPage ? 'page' : null"
+                    [attr.aria-label]="'Ir a la página ' + p" (click)="goTo(p)">{{ p }}</button>
+          }
+        }
+        <button type="button" class="pager__step" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+      </nav>
+    }
+  </main>
+</ion-content>
